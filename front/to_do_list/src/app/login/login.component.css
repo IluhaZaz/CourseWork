@@ -1,0 +1,175 @@
+.login-container {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  font-family: 'Raleway', sans-serif;
+}
+
+.login-container:hover .top:before,
+.login-container:hover .top:after,
+.login-container:hover .bottom:before,
+.login-container:hover .bottom:after {
+  margin-left: 210px;
+  transform-origin: -210px 50%;
+  transition-delay: 0s;
+}
+
+.login-container:hover .center {
+  opacity: 1;
+  transition-delay: 0.2s;
+}
+
+.top, .bottom {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+}
+
+.top:before, .top:after,
+.bottom:before, .bottom:after {
+  content: '';
+  display: block;
+  position: absolute;
+  width: 200vmax;
+  height: 200vmax;
+  top: 50%;
+  left: 50%;
+  margin-top: -100vmax;
+  transform-origin: 0 50%;
+  transition: all 0.5s cubic-bezier(0.445, 0.05, 0, 1);
+  z-index: 10;
+  opacity: 0.65;
+  transition-delay: 0.2s;
+}
+
+.top:before {
+  transform: rotate(45deg);
+  background: #e77d81;
+}
+
+.top:after {
+  transform: rotate(135deg);
+  background: #efbf9a;
+}
+
+.bottom:before {
+  transform: rotate(-45deg);
+  background: #7fc4d9;
+}
+
+.bottom:after {
+  transform: rotate(-135deg);
+  background: #5560b8;
+}
+
+
+.center {
+  position: absolute;
+  width: 400px;
+  top: 48%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+  /* background: rgba(255, 255, 255, 0.9); если нужна форма для входа, но смотрится стремно для этой анимации*/
+  border-radius: 8px;
+  /* box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); */
+  opacity: 0;
+  transition: all 0.5s cubic-bezier(0.445, 0.05, 0, 1);
+  transition-delay: 0s;
+  color: #333;
+  z-index: 20;
+}
+
+.login-form {
+  width: 100%;
+  max-width: 340px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 700;
+  color: #555;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-family: inherit;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #60b8d4;
+  box-shadow: 0 0 0 2px rgba(96, 184, 212, 0.3);
+}
+
+.form-group input.invalid {
+  border-color: #e46569;
+}
+
+.error-message {
+  color: #e46569;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+.submit-button {
+  width: 100%;
+  padding: 12px;
+  background-color: #5560b8;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  box-sizing: border-box;
+}
+
+.submit-button:hover {
+  background-color: #5560b8;
+}
+
+.submit-button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.register-link {
+  text-align: center;
+  margin-top: 20px;
+  color: #666;
+  width: 100%;
+}
+
+.register-link a {
+  color: #5560b8;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.register-link a:hover {
+  text-decoration: underline;
+}
+
+h1 {
+  color: #5560b8;
+  margin-bottom: 20px;
+  text-align: center;
+  width: 100%;
+}

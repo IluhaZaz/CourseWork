@@ -1,2 +1,7 @@
-*.venv
-*.idea
+.env
+.venv/
+__pycache__/
+.vscode/
+.env_non_dev
+front/to_do_list/node_modules/
+venv/
