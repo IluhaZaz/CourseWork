@@ -5,3 +5,4 @@ __pycache__/
 .env_non_dev
 front/to_do_list/node_modules/
 venv/
+dbeaver.deb
