@@ -37,7 +37,9 @@ logger = logging.getLogger(__name__)
 @app.middleware("http")
 async def log_request(request: Request, call_next):
     response: Response = await call_next(request)
-    logger.info(f"Request: {request.method} {request.url} {response.status_code}")
+    logger.info(
+        f"{request.method} {request.url} {request.client.host}:{request.client.port} - {response.status_code}"
+    )
     return response
 
 current_user = fastapi_users.current_user()
