@@ -5,19 +5,20 @@ import logging
 from fastapi import Depends, FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi_users import FastAPIUsers
+from starlette.responses import Response
 
-from auth.auth_backend import auth_backend
-from auth.models import User
-from auth.schemas import UserRead, UserCreate
-from auth.user_manager import get_user_manager, UserManager
-from auth.auth_backend import redis
+from back.src.auth.auth_backend import auth_backend
+from back.src.auth.models import User
+from back.src.auth.schemas import UserRead, UserCreate
+from back.src.auth.user_manager import get_user_manager, UserManager
+from back.src.auth.auth_backend import redis
 
 fastapi_users = FastAPIUsers[User, uuid.UUID](
     get_user_manager,
     [auth_backend],
 )
 
-from core.router import router as core_router
+from back.src.core.router import router as core_router
 
 
 app = FastAPI(title="YourToDoList")
@@ -35,15 +36,8 @@ logger = logging.getLogger(__name__)
 
 @app.middleware("http")
 async def log_request(request: Request, call_next):
-    logger.info(f"Request: {request.method} {request.url}")
-    
-    if request.method in ("POST", "PUT"):
-        body = await request.body()
-        headers = request.headers
-        logger.info(f"Request body: {body.decode()}")
-        logger.info(f"Request headers: {headers}")
-    
-    response = await call_next(request)
+    response: Response = await call_next(request)
+    logger.info(f"Request: {request.method} {request.url} {response.status_code}")
     return response
 
 current_user = fastapi_users.current_user()

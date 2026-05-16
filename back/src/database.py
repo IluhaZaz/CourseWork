@@ -3,7 +3,7 @@ from typing import AsyncGenerator
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.orm import sessionmaker, declarative_base, DeclarativeMeta
 
-from config import DB_HOST, DB_NAME, DB_PASS, DB_PORT, DB_USER
+from back.src.config import DB_HOST, DB_NAME, DB_PASS, DB_PORT, DB_USER
 
 
 Base: DeclarativeMeta = declarative_base()

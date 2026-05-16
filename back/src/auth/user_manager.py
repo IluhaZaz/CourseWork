@@ -6,12 +6,12 @@ from typing import Optional
 from fastapi import Depends, Request, Response
 from fastapi_users import BaseUserManager, UUIDIDMixin
 
-from auth.models import User
-from auth.schemas import UserRead
-from auth.utils import get_user_db
-from auth.auth_backend import redis
-from config import RESET_PASSWORD_TOKEN_SECRET, VERIFICATION_TOKEN_SECRET
-from tasks.emails import get_email_template_dashboard, send_email_report_dashboard
+from back.src.auth.models import User
+from back.src.auth.schemas import UserRead
+from back.src.auth.utils import get_user_db
+from back.src.auth.auth_backend import redis
+from back.src.config import RESET_PASSWORD_TOKEN_SECRET, VERIFICATION_TOKEN_SECRET
+from back.src.tasks.emails import get_email_template_dashboard, send_email_report_dashboard
 
 
 class UserManager(UUIDIDMixin, BaseUserManager[User, uuid.UUID]):

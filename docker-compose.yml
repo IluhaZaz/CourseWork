@@ -2,9 +2,10 @@ services:
 
   db:
     image: postgres:16
-    container_name: db_to_do_lst
     env_file:
       - .env_non_dev
+    ports:
+      - "5432:5432"
     volumes:
       - to_do_lst_db_vol:/var/lib/postgresql/data
 
@@ -12,37 +13,45 @@ services:
     image: redis:7
     container_name: redis_to_do_lst
 
-  app:
+  back:
     build:
       context: .
+      dockerfile: back/Dockerfile
     env_file:
       - .env_non_dev
-    container_name: app_to_do_lst
-    command: sh -c "alembic upgrade head & cd src && gunicorn main:app --workers 4 --worker-class uvicorn.workers.UvicornWorker --bind=0.0.0.0:8000"
+    command: sh -c "alembic upgrade head && gunicorn src.main:app --workers 4 --worker-class uvicorn.workers.UvicornWorker --bind=0.0.0.0:8000"
     ports:
-      - 9999:8000
+      - "8000:8000"
     depends_on:
-      - redis
       - db
+      - redis
 
   celery:
     build:
       context: .
+      dockerfile: back/Dockerfile
     env_file:
       - .env_non_dev
-    container_name: celery_to_do_lst
     command: celery --app=src.tasks.emails:celery worker -l INFO
     depends_on:
       - redis
+      - db
 
   flower:
-    container_name: flower_to_do_lst
     image: mher/flower:0.9.7
     command: ['flower', '--broker=redis://redis:6379', '--port=5555']
     ports:
-      - 5557:5555
+      - "5557:5555"
     depends_on:
       - redis
+
+  frontend:
+    build:
+      context: .
+      dockerfile: front/Dockerfile
+    ports:
+      - "8080:80"
+    restart: unless-stopped
 
 volumes:
   to_do_lst_db_vol:

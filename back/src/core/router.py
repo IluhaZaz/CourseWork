@@ -5,10 +5,10 @@ from sqlalchemy.orm import joinedload
 from uuid import UUID
 from datetime import datetime, timezone
 
-from core.schemas import ItemCreate, ItemRead, ItemUpdate
-from core.models import Item
-from database import get_async_session
-from auth.models import User
+from back.src.core.schemas import ItemCreate, ItemRead, ItemUpdate
+from back.src.core.models import Item
+from back.src.database import get_async_session
+from back.src.auth.models import User
 
 
 
