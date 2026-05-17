@@ -57,7 +57,7 @@ services:
     image: nginx:alpine
     container_name: nginx_to_do_lst
     ports:
-      - "8080:80"  # или "80:80" если порт свободен
+      - "8080:80"
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
       - ./logs/nginx:/var/log/nginx

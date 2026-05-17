@@ -35,7 +35,7 @@ logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     handlers=[
-        logging.FileHandler("requests.log"),
+        # logging.FileHandler("requests.log"),
         logging.StreamHandler()
     ]
 )
@@ -44,8 +44,9 @@ logger = logging.getLogger(__name__)
 @app.middleware("http")
 async def log_request(request: Request, call_next):
     response: Response = await call_next(request)
+    real_ip = request.headers.get("X-Real-IP") or request.client.host
     logger.info(
-        f"{request.method} {request.url} {request.client.host}:{request.client.port} - {response.status_code}"
+        f"{request.method} {request.url} {real_ip} - {response.status_code}"
     )
     return response
 
