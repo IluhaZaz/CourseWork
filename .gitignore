@@ -6,3 +6,4 @@ __pycache__/
 front/to_do_list/node_modules/
 venv/
 dbeaver.deb
+logs

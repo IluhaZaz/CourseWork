@@ -1,10 +1,8 @@
 import smtplib
-import sys, os
 
 from email.message import EmailMessage
 from celery import Celery
 
-sys.path.append(os.path.join(sys.path[0], 'src'))
 
 from back.src.config import SMTP_PASSWORD, SMTP_USER, REDIS_HOST, REDIS_PORT
 

@@ -1,0 +1,8 @@
+FROM python:3.11-slim
+
+ENV WORKDIR /app
+WORKDIR $WORKDIR
+
+COPY requirements.txt $WORKDIR/
+
+RUN pip install -r requirements.txt

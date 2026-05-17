@@ -45,6 +45,7 @@ logger = logging.getLogger(__name__)
 async def log_request(request: Request, call_next):
     response: Response = await call_next(request)
     real_ip = request.headers.get("X-Real-IP") or request.client.host
+    logger.info(request.headers)
     logger.info(
         f"{request.method} {request.url} {real_ip} - {response.status_code}"
     )

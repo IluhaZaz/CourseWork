@@ -9,12 +9,12 @@ import os, sys
 sys.path.append(os.path.join(sys.path[0], 'src'))
 
 #files with models start
-from auth.models import User
-from core.models import Item
+from back.src.auth.models import User
+from back.src.core.models import Item
 #files with models end
 
-from database import Base
-from config import DB_HOST, DB_NAME, DB_PASS, DB_PORT, DB_USER
+from back.src.database import Base
+from back.src.config import DB_HOST, DB_NAME, DB_PASS, DB_PORT, DB_USER
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.

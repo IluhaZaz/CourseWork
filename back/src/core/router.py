@@ -17,7 +17,7 @@ router = APIRouter(
     tags=["ToDoList"]
 )
 
-from main import fastapi_users
+from back.src.main import fastapi_users
 
 current_user = fastapi_users.current_user()
 
