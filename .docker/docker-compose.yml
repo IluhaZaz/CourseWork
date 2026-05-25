@@ -5,7 +5,7 @@ services:
     env_file:
       - ../.env_non_dev
     ports:
-      - "5432:5432"
+      - "127.0.0.1:5432:5432"
     volumes:
       - to_do_lst_db_vol:/var/lib/postgresql/data
 
