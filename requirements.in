@@ -10,3 +10,4 @@ flower
 pytest
 pytest-asyncio
 gunicorn
+ldap3

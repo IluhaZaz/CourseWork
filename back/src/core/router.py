@@ -5,6 +5,7 @@ from sqlalchemy.orm import joinedload
 from uuid import UUID
 from datetime import datetime, timezone
 
+from back.src.auth.ldap import ldap_auth
 from back.src.core.schemas import ItemCreate, ItemRead, ItemUpdate
 from back.src.core.models import Item
 from back.src.database import get_async_session

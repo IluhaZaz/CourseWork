@@ -3,11 +3,13 @@ import json
 
 from typing import Optional
 
-from fastapi import Depends, Request, Response
+from fastapi import Depends, Request, Response, HTTPException
+from fastapi.security import OAuth2PasswordRequestForm
 from fastapi_users import BaseUserManager, UUIDIDMixin
 
+from back.src.auth.ldap import register_user, ldap_auth
 from back.src.auth.models import User
-from back.src.auth.schemas import UserRead
+from back.src.auth.schemas import UserRead, UserCreate
 from back.src.auth.utils import get_user_db
 from back.src.auth.auth_backend import redis
 from back.src.config import RESET_PASSWORD_TOKEN_SECRET, VERIFICATION_TOKEN_SECRET
@@ -17,6 +19,42 @@ from back.src.tasks.emails import get_email_template_dashboard, send_email_repor
 class UserManager(UUIDIDMixin, BaseUserManager[User, uuid.UUID]):
     reset_password_token_secret = RESET_PASSWORD_TOKEN_SECRET
     verification_token_secret = VERIFICATION_TOKEN_SECRET
+
+    async def authenticate(
+            self, credentials: OAuth2PasswordRequestForm
+    ) -> Optional[User]:
+        res = await super().authenticate(credentials)
+        ldap_auth(credentials.username, credentials.password)
+
+        return res
+
+    async def create(
+            self,
+            user_create: UserCreate,
+            safe: bool = False,
+            request: Optional[Request] = None,
+    ) -> User:
+
+        email = user_create.email
+        password = user_create.password
+
+        if not email or not password:
+            raise HTTPException(
+                status_code=400,
+                detail="Email and password are required for LDAP registration"
+            )
+
+        ldap_success = register_user(email=email, password=password)
+
+        if not ldap_success:
+            raise HTTPException(
+                status_code=400,
+                detail="LDAP registration failed. User may already exist or invalid credentials."
+            )
+
+        user = await super().create(user_create, safe, request)
+
+        return user
 
     async def on_after_login(self, user: User, 
                              request: Request | None = None, response: Response | None = None
